@@ -1,20 +1,27 @@
 "use client";
-import { CldUploadButton } from "next-cloudinary";
+import { CldUploadButton, CloudinaryUploadWidgetInfo } from "next-cloudinary";
 import { CldImage } from "next-cloudinary";
+import { useState } from "react";
 
 export default function Home() {
+  const [imageId, setImageId] = useState('khovasd4v5k5nm7rpcsu');
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <CldUploadButton uploadPreset="cqyqeg2v" 
-      // onSuccess={}
+      onSuccess={(results,widget) => {
+        // console.log({results,widget})
+        setImageId((results.info as CloudinaryUploadWidgetInfo).public_id);
+      }}
       />
-      <CldImage
+      {imageId && <CldImage
         width="960"
         height="600"
-        src="wfbrdxpxo9pyqfsu4pt7"
+        src={imageId}
         sizes="100vw"
         alt="Description of my image"
-      />
+        cartoonify
+        tint="70:blue:purple"
+      />}
     </main>
   );
 }
